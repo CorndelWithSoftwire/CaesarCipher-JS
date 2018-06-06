@@ -19,4 +19,13 @@ describe('#encrypt', function () {
     const result = crypt.encrypt(message, 0);
     assert.equal(result, 'somemessage');
   });
+
+  it('ignore non-alphabetic characters', function () {
+    const message = 'a b_c-d';
+    const result = crypt.encrypt(message, 1);
+    assert.equal(result, 'b c_d-e');
+  });
+
+  // TODO: Test rotation
+  // TODO: Test case-sensitivity
 });
