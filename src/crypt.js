@@ -8,7 +8,7 @@ exports.encrypt = function (message, shift) {
       return character;
     }
 
-    const newIndex = originalIndex + shift;
+    const newIndex = (originalIndex + shift) % 26;
     return alphabet[newIndex];
   }).join('');
 };

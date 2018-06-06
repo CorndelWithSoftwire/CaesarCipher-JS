@@ -26,6 +26,9 @@ describe('#encrypt', function () {
     assert.equal(result, 'b c_d-e');
   });
 
-  // TODO: Test rotation
+  it('rotates characters from the end of the alphabet', function () {
+    assert.equal(crypt.encrypt('xyz', 3), 'abc');
+  });
+
   // TODO: Test case-sensitivity
 });
