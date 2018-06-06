@@ -1,7 +1,7 @@
 const alphabet = 'abcdefghijklmnopqrstuvwxyz';
 
 exports.encrypt = function (message, shift) {
-  return Array.from(message).map(function (character) {
+  return Array.from(message.toLowerCase()).map(function (character) {
     const originalIndex = alphabet.indexOf(character);
 
     if (originalIndex < 0) {

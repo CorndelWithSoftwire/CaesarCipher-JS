@@ -30,5 +30,7 @@ describe('#encrypt', function () {
     assert.equal(crypt.encrypt('xyz', 3), 'abc');
   });
 
-  // TODO: Test case-sensitivity
+  it('converts to lower case', function () {
+    assert.equal(crypt.encrypt('AbC', 1), 'bcd');
+  });
 });
