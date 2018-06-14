@@ -1,10 +1,28 @@
 require('mocha-sinon');
+const assert = require('assert');
 
 const messageDispatcher = require('../src/message_dispatcher');
 const apiClient = require('../src/api_client');
 const crypt = require('../src/crypt');
 
 // Preview message instead
+
+describe('#preview', function () {
+  // Use real crypt function
+  it('previews the encrypted message', function () {
+    const preview = messageDispatcher.preview('abcd', 4);
+    assert.equal(preview, 'efgh');
+  });
+
+  // Use stubbed crypt function
+  it('previews the encrypted message', function () {
+    const encrypt = this.sinon.stub(crypt, 'encrypt');
+    encrypt.withArgs('abcd', 4).returns('an encrypted message');
+
+    const preview = messageDispatcher.preview('abcd', 4);
+    assert.equal(preview, 'an encrypted message');
+  });
+});
 
 describe('#send', function () {
   // Use real crypt function
@@ -17,7 +35,7 @@ describe('#send', function () {
     mockApiClient.verify();
   });
 
-  // Use stub crypt function
+  // Use stubbed crypt function
   it('sends an encrypted message to the API', function () {
     const encrypt = this.sinon.stub(crypt, 'encrypt');
     encrypt.withArgs('abcd', 8).returns('some encrypted message');
