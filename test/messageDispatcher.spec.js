@@ -36,7 +36,7 @@ describe('#send', function () {
   });
 
   // Use stubbed crypt function
-  it('sends an encrypted message to the API', function () {
+  it('sends an encrypted message', function () {
     const encrypt = this.sinon.stub(crypt, 'encrypt');
     encrypt.withArgs('abcd', 8).returns('some encrypted message');
 
