@@ -14,4 +14,10 @@ describe('preview message', function () {
 
     expect(response).to.equal('An encrypted message');
   });
+
+  it('handles unknown commands', function () {
+    const response = controller.sendCommand('not a real command');
+
+    expect(response).to.equal('Unknown command "not a real command"');
+  });
 });

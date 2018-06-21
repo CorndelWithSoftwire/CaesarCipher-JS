@@ -10,5 +10,8 @@ function previewMessage(command) {
 }
 
 exports.sendCommand = function (command) {
-  return previewMessage(command);
+  if (command.startsWith('preview message')) {
+    return previewMessage(command);
+  }
+  return `Unknown command "${command}"`;
 };
