@@ -5,7 +5,8 @@ exports.preview = function (message, shift) {
   return crypt.encrypt(message, shift);
 };
 
-exports.send = function (message, recipient, shift) {
+exports.send = async function (message, recipient, shift) {
   const encryptedMessage = crypt.encrypt(message, shift);
-  apiClient.send(encryptedMessage, recipient);
+  const response = await apiClient.send(encryptedMessage, recipient);
+  return response.id;
 };

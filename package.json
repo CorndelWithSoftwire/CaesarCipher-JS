@@ -13,6 +13,8 @@
     "eslint": "^4.19.1",
     "mocha": "^5.2.0",
     "mocha-sinon": "^2.1.0",
+    "nock": "^9.3.3",
+    "node-fetch": "^2.1.2",
     "sinon": "^5.0.10"
   },
   "dependencies": {

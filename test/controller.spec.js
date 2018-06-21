@@ -14,7 +14,20 @@ describe('preview message', function () {
 
     expect(response).to.equal('An encrypted message');
   });
+});
 
+describe('send message', function () {
+  it('sends a message', function () {
+    const mockDispatcher = this.sinon.mock(messageDispatcher);
+    mockDispatcher.expects('send').withArgs('Some message', 'alice', 7);
+
+    controller.sendCommand('send message alice 7 Some message');
+
+    mockDispatcher.verify();
+  });
+});
+
+describe('unknown command', function () {
   it('handles unknown commands', function () {
     const response = controller.sendCommand('not a real command');
 

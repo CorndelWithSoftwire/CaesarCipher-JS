@@ -5,16 +5,7 @@ const messageDispatcher = require('../src/message_dispatcher');
 const apiClient = require('../src/api_client');
 const crypt = require('../src/crypt');
 
-// Preview message instead
-
 describe('#preview', function () {
-  // Use real crypt function
-  it('previews the encrypted message', function () {
-    const preview = messageDispatcher.preview('abcd', 4);
-    assert.equal(preview, 'efgh');
-  });
-
-  // Use stubbed crypt function
   it('previews the encrypted message', function () {
     const encrypt = this.sinon.stub(crypt, 'encrypt');
     encrypt.withArgs('abcd', 4).returns('an encrypted message');
@@ -25,26 +16,18 @@ describe('#preview', function () {
 });
 
 describe('#send', function () {
-  // Use real crypt function
-  it('sends an encrypted message', function () {
-    const mockApiClient = this.sinon.mock(apiClient);
-    mockApiClient.expects('send').withArgs('bcde', 'alice');
-
-    messageDispatcher.send('abcd', 'alice', 1);
-
-    mockApiClient.verify();
-  });
-
-  // Use stubbed functions
-  it('sends an encrypted message', function () {
+  it('sends an encrypted message', async function () {
     const encrypt = this.sinon.stub(crypt, 'encrypt');
     encrypt.withArgs('original message', 8).returns('some encrypted message');
 
     const mockApiClient = this.sinon.mock(apiClient);
-    mockApiClient.expects('send').withArgs('some encrypted message', 'alice');
+    mockApiClient.expects('send')
+      .withArgs('some encrypted message', 'alice')
+      .returns({id: 1234});
 
-    messageDispatcher.send('original message', 'alice', 8);
+    const response = await messageDispatcher.send('original message', 'alice', 8);
 
+    assert.equal(response, 1234);
     mockApiClient.verify();
   });
 });
