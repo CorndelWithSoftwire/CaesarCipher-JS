@@ -1,5 +1,7 @@
 require('mocha-sinon');
 const assert = require('assert');
+const chai = require('chai');
+const expect = chai.expect;
 
 const messageDispatcher = require('../src/message_dispatcher');
 const apiClient = require('../src/api_client');
@@ -29,5 +31,23 @@ describe('#send', function () {
 
     assert.equal(response, 1234);
     mockApiClient.verify();
+  });
+});
+
+describe('#fetch', function () {
+  it('fetches and decrypts messages', async function () {
+    const decrypt = this.sinon.stub(crypt, 'decrypt');
+    decrypt.withArgs('encrypted message', 9).returns('decrypted message');
+
+    const messageFetcher = this.sinon.stub(apiClient, 'fetch');
+    const message = {
+      userId: 2,
+      body: 'encrypted message'
+    };
+    messageFetcher.returns(message);
+
+    const response = await messageDispatcher.fetch(9);
+
+    expect(response).to.deep.equal({user: 2, body: 'decrypted message'});
   });
 });

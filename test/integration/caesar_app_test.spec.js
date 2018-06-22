@@ -21,7 +21,21 @@ describe('caesar cipher app', function () {
 
     const response = await controller.sendCommand('send message bob 25 A message for Bob');
 
-    messageApi.done();
     expect(response).to.equal(56);
+    messageApi.done();
+  });
+
+  it('receives messages', async function () {
+    const apiResponse = {
+      userId: 5,
+      body: 'mz uzoayuzs yqeemsq'
+    };
+    nock('https://jsonplaceholder.typicode.com')
+      .get(/\/posts\/\d+/)
+      .reply(200, apiResponse);
+
+    const response = await controller.sendCommand('check messages 12');
+
+    expect(response).to.equal('user 5: an incoming message');
   });
 });

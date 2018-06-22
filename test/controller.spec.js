@@ -23,7 +23,28 @@ describe('send message', function () {
 
     await controller.sendCommand('send message alice 7 Some message');
 
+    // TODO: Test return type
     mockDispatcher.verify();
+  });
+});
+
+describe('check messages', function () {
+  it('returns notice about no messages', async function () {
+    const messageFetcher = this.sinon.stub(messageDispatcher, 'fetch');
+    messageFetcher.withArgs(5).returns(null);
+
+    const response = await controller.sendCommand('check messages 5');
+
+    expect(response).to.equal('no messages');
+  });
+
+  it('fetches messages', async function () {
+    const messageFetcher = this.sinon.stub(messageDispatcher, 'fetch');
+    messageFetcher.withArgs(11).returns({user: 3, body: 'a fetched message'});
+
+    const response = await controller.sendCommand('check messages 11');
+
+    expect(response).to.equal('user 3: a fetched message');
   });
 });
 
