@@ -1,5 +1,5 @@
 const controller = require('./src/controller');
-const readline = require('readline-sync');
+const readline = require('readline');
 
 console.log(`Welcome to the Caesar encryption app
 ===================================
@@ -20,17 +20,29 @@ Commands:
 - quit
 `);
 
-let appIsRunning = true;
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+  prompt: 'enter command> '
+});
 
-while (appIsRunning) {
-  const command = readline.prompt();
+rl.prompt();
 
-  if (command === 'quit') {
-    appIsRunning = false;
-  } else {
-    const response = controller.sendCommand(command);
-    if (response) {
-      console.log(response);
-    }
+rl.on('line', (command) => {
+  switch (command) {
+    case 'quit':
+      console.log('Bye! ^_^');
+      process.exit(0);
+      break;
+    default:
+      const response = controller.sendCommand(command);
+      if (response) {
+        console.log(response);
+      }
   }
-}
+
+  rl.prompt();
+}).on('close', () => {
+  console.log('Bye! ^_^');
+  process.exit(0);
+});

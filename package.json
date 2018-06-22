@@ -17,7 +17,5 @@
     "node-fetch": "^2.1.2",
     "sinon": "^5.0.10"
   },
-  "dependencies": {
-    "readline-sync": "^1.4.9"
-  }
+  "dependencies": {}
 }
