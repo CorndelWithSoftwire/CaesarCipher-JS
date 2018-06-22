@@ -37,10 +37,9 @@ exports.sendCommand = async function (command) {
   if (command.startsWith('preview message')) {
     return previewMessage(command);
   } else if (command.startsWith('send message')) {
-    // TODO: Is await actually necessary on return?
-    return await sendMessage(command);
+    return sendMessage(command);
   } else if (command.startsWith('check messages')) {
-    return await checkMessages(command);
+    return checkMessages(command);
   }
   return `Unknown command "${command}"`;
 };
