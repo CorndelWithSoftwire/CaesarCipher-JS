@@ -13,8 +13,10 @@ describe('caesar cipher app', function () {
   it('sends a message', async function () {
     const apiResponse = JSON.stringify({ id: 56 });
     const messageApi = nock('https://jsonplaceholder.typicode.com')
-      .post('/posts')
-      // TODO: Test that POST body is correct
+      .post('/posts', {
+        userId: 'bob',
+        body: 'z ldrrzfd enq ana'
+      })
       .reply(200, apiResponse);
 
     const response = await controller.sendCommand('send message bob 25 A message for Bob');
