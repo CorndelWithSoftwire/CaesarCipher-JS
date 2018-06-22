@@ -35,10 +35,11 @@ rl.on('line', (command) => {
       process.exit(0);
       break;
     default:
-      const response = controller.sendCommand(command);
-      if (response) {
-        console.log(response);
-      }
+      controller.sendCommand(command).then( response => {
+        if (response) {
+          console.log(response);
+        }
+      });
   }
 
   rl.prompt();

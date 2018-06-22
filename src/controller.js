@@ -19,11 +19,11 @@ function sendMessage(command) {
   return messageDispatcher.send(message, recipient, shift);
 }
 
-exports.sendCommand = function (command) {
+exports.sendCommand = async function (command) {
   if (command.startsWith('preview message')) {
     return previewMessage(command);
   } else if (command.startsWith('send message')) {
-    return sendMessage(command);
+    return await sendMessage(command);
   }
   return `Unknown command "${command}"`;
 };
