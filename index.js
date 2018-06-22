@@ -39,10 +39,10 @@ rl.on('line', (command) => {
         if (response) {
           console.log(response);
         }
+
+        rl.prompt();
       });
   }
-
-  rl.prompt();
 }).on('close', () => {
   console.log('Bye! ^_^');
   process.exit(0);
