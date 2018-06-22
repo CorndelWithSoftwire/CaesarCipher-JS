@@ -30,18 +30,18 @@ rl.prompt();
 
 rl.on('line', (command) => {
   switch (command) {
-    case 'quit':
-      console.log('Bye! ^_^');
-      process.exit(0);
-      break;
-    default:
-      controller.sendCommand(command).then( response => {
-        if (response) {
-          console.log(response);
-        }
+  case 'quit':
+    console.log('Bye! ^_^');
+    process.exit(0);
+    break;
+  default:
+    controller.sendCommand(command).then( response => {
+      if (response) {
+        console.log(response);
+      }
 
-        rl.prompt();
-      });
+      rl.prompt();
+    });
   }
 }).on('close', () => {
   console.log('Bye! ^_^');

@@ -13,7 +13,7 @@ describe('caesar cipher app', function () {
   it('sends a message', async function () {
     const apiResponse = JSON.stringify({ id: 56 });
     const messageApi = nock('https://jsonplaceholder.typicode.com')
-      .post("/posts")
+      .post('/posts')
       // TODO: Test that POST body is correct
       .reply(200, apiResponse);
 
