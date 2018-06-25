@@ -22,7 +22,7 @@ async function sendMessage(command) {
     return 'message sent';
   } catch (e) {
     if (e instanceof ApiError) {
-      return 'failed to send message';
+      return `failed to send message: ${e.message}`;
     }
     throw e;
   }
@@ -33,13 +33,20 @@ async function checkMessages(command) {
   const matches = command.match(regex);
   const shift = parseInt(matches[1]);
 
-  const message = await messageDispatcher.fetch(shift);
+  try {
+    const message = await messageDispatcher.fetch(shift);
 
-  if (message) {
-    return `user ${message.user}: ${message.body}`;
+    if (message) {
+      return `user ${message.user}: ${message.body}`;
+    }
+
+    return 'no messages';
+  } catch (e) {
+    if (e instanceof ApiError) {
+      return `failed to fetch messages: ${e.message}`;
+    }
+    throw e;
   }
-
-  return 'no messages';
 }
 
 exports.sendCommand = async function (command) {

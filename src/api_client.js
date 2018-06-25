@@ -14,7 +14,7 @@ exports.send = async function (message, recipient) {
 
   const response = await fetch('https://jsonplaceholder.typicode.com/posts', options);
   if (response.status >= 400) {
-    throw new ApiError(`Could not send message. Error ${response.status}: ${response.statusText}`);
+    throw new ApiError(`API response ${response.status}: ${response.statusText}`);
   }
 
   return response.json();
@@ -22,8 +22,13 @@ exports.send = async function (message, recipient) {
 
 exports.fetch = async function () {
   const postId = randomPostId();
-  return await fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`)
-    .then(res => res.json());
+
+  const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`);
+  if (response.status >= 400) {
+    throw new ApiError(`API response ${response.status}: ${response.statusText}`);
+  }
+
+  return response.json();
 };
 
 function randomPostId () {

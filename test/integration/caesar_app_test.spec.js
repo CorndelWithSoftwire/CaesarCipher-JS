@@ -40,16 +40,23 @@ describe('caesar cipher app', function () {
   });
 
   it('returns an error message if sending a message fails', async function () {
-    const apiResponse = JSON.stringify({ id: 56 });
     nock('https://jsonplaceholder.typicode.com')
-      .post('/posts', {
-        userId: 'bob',
-        body: 'z ldrrzfd enq ana'
-      })
-      .reply(500, apiResponse);
+      .post('/posts')
+      .reply(503);
 
     const response = await controller.sendCommand('send message bob 25 A message for Bob');
 
-    expect(response).to.equal('failed to send message');
+    expect(response).to.contain('failed to send message');
+    expect(response).to.contain('503');
+  });
+
+  it('returns an error message if sending a message fails', async function () {
+    nock('https://jsonplaceholder.typicode.com')
+      .get(/\/posts\/\d+/)
+      .reply(404);
+
+    const response = await controller.sendCommand('check messages 4');
+
+    expect(response).to.contain('404');
   });
 });
