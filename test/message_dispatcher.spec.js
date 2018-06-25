@@ -26,9 +26,8 @@ describe('#send', function () {
       .withArgs('some encrypted message', 'alice')
       .returns({id: 1234});
 
-    const response = await messageDispatcher.send('original message', 'alice', 8);
+    await messageDispatcher.send('original message', 'alice', 8);
 
-    expect(response).to.equal(1234);
     mockApiClient.verify();
   });
 });
