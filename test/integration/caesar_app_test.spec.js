@@ -21,7 +21,7 @@ describe('caesar cipher app', function () {
 
     const response = await controller.sendCommand('send message bob 25 A message for Bob');
 
-    expect(response).to.equal(56);
+    expect(response).to.equal('message sent');
     messageApi.done();
   });
 

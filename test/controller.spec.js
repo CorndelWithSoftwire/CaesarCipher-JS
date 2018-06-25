@@ -21,10 +21,10 @@ describe('send message', function () {
     const mockDispatcher = this.sinon.mock(messageDispatcher);
     mockDispatcher.expects('send').withArgs('Some message', 'alice', 7);
 
-    await controller.sendCommand('send message alice 7 Some message');
+    const response = await controller.sendCommand('send message alice 7 Some message');
 
-    // TODO: Test return type
     mockDispatcher.verify();
+    expect(response).to.equal('message sent');
   });
 });
 

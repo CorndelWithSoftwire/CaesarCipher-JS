@@ -16,7 +16,8 @@ function sendMessage(command) {
   const shift = parseInt(matches[2]);
   const message = matches[3];
 
-  return messageDispatcher.send(message, recipient, shift);
+  messageDispatcher.send(message, recipient, shift);
+  return 'message sent';
 }
 
 async function checkMessages(command) {
