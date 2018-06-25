@@ -1,5 +1,4 @@
 require('mocha-sinon');
-const assert = require('assert');
 const chai = require('chai');
 const expect = chai.expect;
 
@@ -13,7 +12,7 @@ describe('#preview', function () {
     encrypt.withArgs('abcd', 4).returns('an encrypted message');
 
     const preview = messageDispatcher.preview('abcd', 4);
-    assert.equal(preview, 'an encrypted message');
+    expect(preview).to.equal('an encrypted message');
   });
 });
 
@@ -29,7 +28,7 @@ describe('#send', function () {
 
     const response = await messageDispatcher.send('original message', 'alice', 8);
 
-    assert.equal(response, 1234);
+    expect(response).to.equal(1234);
     mockApiClient.verify();
   });
 });
