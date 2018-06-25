@@ -1,3 +1,4 @@
+const ApiError = require('./api_error');
 const messageDispatcher = require('./message_dispatcher');
 
 function previewMessage(command) {
@@ -9,15 +10,22 @@ function previewMessage(command) {
   return messageDispatcher.preview(message, shift);
 }
 
-function sendMessage(command) {
+async function sendMessage(command) {
   const regex = /send message (\w+) (\d+) (.*)/;
   const matches = command.match(regex);
   const recipient = matches[1];
   const shift = parseInt(matches[2]);
   const message = matches[3];
 
-  messageDispatcher.send(message, recipient, shift);
-  return 'message sent';
+  try {
+    await messageDispatcher.send(message, recipient, shift);
+    return 'message sent';
+  } catch (e) {
+    if (e instanceof ApiError) {
+      return 'failed to send message';
+    }
+    throw e;
+  }
 }
 
 async function checkMessages(command) {

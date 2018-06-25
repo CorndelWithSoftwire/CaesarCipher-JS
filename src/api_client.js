@@ -1,3 +1,4 @@
+const ApiError = require('./api_error');
 const fetch = require('node-fetch');
 
 exports.send = async function (message, recipient) {
@@ -11,8 +12,12 @@ exports.send = async function (message, recipient) {
     body: JSON.stringify(postBody)
   };
 
-  return await fetch('https://jsonplaceholder.typicode.com/posts', options)
-    .then(res => res.json());
+  const response = await fetch('https://jsonplaceholder.typicode.com/posts', options);
+  if (response.status >= 400) {
+    throw new ApiError(`Could not send message. Error ${response.status}: ${response.statusText}`);
+  }
+
+  return response.json();
 };
 
 exports.fetch = async function () {
