@@ -5,6 +5,11 @@ const nock = require('nock');
 const controller = require('../../src/controller');
 
 describe('caesar cipher app', function () {
+  before(function () {
+    // Prevent test from accidentally making a real API call
+    nock.disableNetConnect();
+  });
+
   it('previews a message', async function () {
     const response = await controller.sendCommand('preview message 10 This is a message');
     expect(response).to.equal('drsc sc k wocckqo');
