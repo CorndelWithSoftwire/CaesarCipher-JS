@@ -12,27 +12,27 @@ exports.send = async function (message, recipient) {
     body: JSON.stringify(postBody)
   };
 
-  const response = await fetch('https://jsonplaceholder.typicode.com/posts', options);
-  if (response.status >= 400) {
-    throw new ApiError(`API response ${response.status}: ${response.statusText}`);
-  }
-
-  return response.json();
+  return getJson('https://jsonplaceholder.typicode.com/posts', options);
 };
 
 exports.fetch = async function () {
   const postId = randomPostId();
 
-  const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`);
-  if (response.status >= 400) {
-    throw new ApiError(`API response ${response.status}: ${response.statusText}`);
-  }
-
-  return response.json();
+  return getJson(`https://jsonplaceholder.typicode.com/posts/${postId}`);
 };
 
 function randomPostId () {
   const min = 1;
   const max = 100;
   return Math.floor(Math.random() * (max - min)) + min;
+}
+
+async function getJson (url, options) {
+  const response = await fetch(url, options);
+
+  if (response.status >= 400) {
+    throw new ApiError(`API response ${response.status}: ${response.statusText}`);
+  }
+
+  return response.json();
 }
